@@ -1,22 +1,30 @@
-class Word {
-    private string _word;
-    private bool _isHidden;
+class Word 
+{
+    private string _word;   // Stores the actual word
+    private bool _isHidden; // Indicates whether the word is hidden
 
-    public Word(string word){
+    // Constructor to initialize the word and set its hidden status to false
+    public Word(string word)
+    {
         _word = word;
         _isHidden = false;
     }
 
-    public void Hide(){
+    // Method to hide the word by setting _isHidden to true
+    public void Hide()
+    {
         _isHidden = true;
     }
 
-    public bool IsHidden() {
+    // Method to check if the word is hidden
+    public bool IsHidden() 
+    {
         return _isHidden;
     }
 
-    public string Display(){
+    // Method to display the word; if hidden, returns dashes of the same length
+    public string Display()
+    {
         return _isHidden ? new string('-', _word.Length) : _word;
-        }
-
+    }
 }
