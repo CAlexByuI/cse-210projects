@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-
-// Abstract Adventurer Class
 public abstract class Adventurer
 {
     protected string _name;
@@ -57,4 +53,8 @@ public abstract class Adventurer
         if (_health > _maxHealth / 2) return "Healthy";
         return "Injured";
     }
+
+    public int GetArmor() => _armor;
+    public int GetHealth() => _health;
+    public bool IsConscious() => _isConscious;
 }
