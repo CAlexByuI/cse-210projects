@@ -62,13 +62,30 @@ class Program
 
                     if (action == "attack")
                     {
-                        Console.WriteLine($"{adventurer.GetName()} attacks for {adventurer.CalculateDmg()} damage!");
+                        if (adventurer.HasEnoughStamina(10))
+                        {
+                            adventurer.UseStamina(10);
+                            Console.WriteLine($"{adventurer.GetName()} attacks for {adventurer.CalculateDmg()} damage!");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{adventurer.GetName()} is too tired to attack.");
+                        }
                     }
                     else if (action == "heal")
                     {
-                        adventurer.Heal(10);
-                        Console.WriteLine($"{adventurer.GetName()} heals for 10 HP.");
+                        if (adventurer.HasEnoughStamina(8))
+                        {
+                            adventurer.UseStamina(8);
+                            adventurer.Heal(10);
+                            Console.WriteLine($"{adventurer.GetName()} heals for 10 HP.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{adventurer.GetName()} is too tired to heal.");
+                        }
                     }
+                
                 }
 
                 // Enemy retaliates
