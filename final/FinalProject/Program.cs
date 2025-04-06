@@ -2,6 +2,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        // Create a predefined party of adventurers
         List<Adventurer> party = new List<Adventurer>
         {
             new Wizard("Ezra"),
@@ -11,6 +12,7 @@ class Program
             new Merchant("Marlo")
         };
 
+        // Prompt user to create their own adventurer
         Console.WriteLine("Create your own adventurer!");
         Console.Write("Enter name: ");
         string name = Console.ReadLine();
@@ -18,6 +20,7 @@ class Program
         Console.WriteLine("Choose class (Wizard, Knight, Archer, Thief, Merchant): ");
         string subclass = Console.ReadLine();
 
+        // Create the player's character based on chosen class
         Adventurer playerCharacter = subclass.ToLower() switch
         {
             "wizard" => new Wizard(name),
@@ -28,14 +31,17 @@ class Program
             _ => throw new ArgumentException("Invalid class selection.")
         };
 
+        // Add player character to the party
         party.Add(playerCharacter);
 
+        // Display party members and their stats
         Console.WriteLine("\nYour party:");
         foreach (var adventurer in party)
         {
             Console.WriteLine($"{adventurer.GetName()} the {adventurer.GetSubclass()} - Armor: {adventurer.GetArmor()} - Status: {adventurer.CheckStatus()}");
         }
 
+        // Begin the dungeon sequence
         Console.WriteLine("\nEntering the dungeon...");
         RunDungeon(party);
     }
@@ -45,6 +51,7 @@ class Program
         Random rng = new Random();
         string[] encounters = { "Enemy", "Treasure", "Trap", "Healing", "Puzzle", "Merchant" };
 
+        // The dungeon consists of 3 rooms
         for (int room = 1; room <= 3; room++)
         {
             Console.WriteLine($"\n-- Room {room} --");
@@ -53,6 +60,7 @@ class Program
 
             if (encounter == "Enemy")
             {
+                // Each conscious adventurer takes an action
                 foreach (var adventurer in party)
                 {
                     if (!adventurer.IsConscious()) continue;
@@ -62,6 +70,7 @@ class Program
 
                     if (action == "attack")
                     {
+                        // Check stamina before allowing attack
                         if (adventurer.HasEnoughStamina(10))
                         {
                             adventurer.UseStamina(10);
@@ -74,6 +83,7 @@ class Program
                     }
                     else if (action == "heal")
                     {
+                        // Check stamina before allowing heal
                         if (adventurer.HasEnoughStamina(8))
                         {
                             adventurer.UseStamina(8);
@@ -85,10 +95,9 @@ class Program
                             Console.WriteLine($"{adventurer.GetName()} is too tired to heal.");
                         }
                     }
-                
                 }
 
-                // Enemy retaliates
+                // Enemy counterattacks all conscious adventurers
                 Console.WriteLine("Enemy attacks back!");
                 foreach (var adventurer in party)
                 {
@@ -102,6 +111,7 @@ class Program
             }
             else if (encounter == "Healing")
             {
+                // Heal all adventurers
                 foreach (var adventurer in party)
                 {
                     adventurer.Heal(15);
@@ -110,10 +120,12 @@ class Program
             }
             else if (encounter == "Treasure")
             {
+                // Flavor encounter - no mechanical effect yet
                 Console.WriteLine("You found a chest of gold! It doesn’t do anything… yet.");
             }
             else if (encounter == "Trap")
             {
+                // All adventurers take random damage
                 Console.WriteLine("A trap springs! Everyone takes damage.");
                 foreach (var adventurer in party)
                 {
@@ -122,14 +134,17 @@ class Program
             }
             else if (encounter == "Puzzle")
             {
+                // Flavor encounter - no real challenge yet
                 Console.WriteLine("A mysterious puzzle blocks the way. You solve it easily. Somehow.");
             }
             else if (encounter == "Merchant")
             {
+                // Flavor encounter - could be used for future features
                 Console.WriteLine("A traveling merchant offers you mysterious wares… but you’re broke.");
             }
         }
 
+        // End of dungeon run
         Console.WriteLine("\nDungeon crawl complete!");
     }
 }
